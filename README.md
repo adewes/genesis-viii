@@ -21,6 +21,28 @@ Currently, the package contains genetic programs for modeling the following quan
 
 To get you started, example scripts and stock market data is included.
 
+##Example
+
+As an example, the following code will evolve a model for the bivariate copula of the returns of the Dow Jones Industrial Index (DOW) and the Deutsche Aktienindex (DAX), using 50 rounds of evolution with tournament selection and a given mutation, crossover and shrink rate:
+
+```Lua
+p=pop.new();
+
+dir="data/copula_test_new";
+
+pop.output_dir(p,dir);
+logger.reopen(dir);
+
+print("Mutation rate:",pop.mutation_rate(p,0.05),"\n");
+print("Shrink rate:",pop.shrink_rate(p,0.025),"\n");
+print("Crossover size:",pop.crossover_size(p,0.2),"\n");
+print("Tournament size:",pop.tournament_size(p,6),"\n");
+
+pop.create(p,1000,10,program.copula,"data/stocks/dow.csv","data/stocks/dax.csv",6,",");
+pop.run(p,50);
+
+```
+
 ##Terms of Usage
 
 The code (except the numerical recipes snippets that were used and the Lua interface library code) can be freely reused. Feel free to include a reference to this code if you reuse it in your own project.
